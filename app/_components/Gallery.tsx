@@ -24,13 +24,13 @@ export default function Gallery() {
         const response = await fetch(
           `https://res.cloudinary.com/dzczno8ka/image/list/cafe-gallery.json`,
         );
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error(`Cloudinary Error (${response.status}):`, errorText);
-          return;
+        if (response.ok) {
+          const data = await response.json();
+          if (data) setImages(data.resources);
+          else return;
+        } else {
+            return;
         }
-        const data = await response.json();
-        setImages(data.resources);
       } catch (error) {
         console.error("Error fetching gallery:", error);
       }
@@ -90,7 +90,10 @@ export default function Gallery() {
     return data.secure_url;
   };
   return (
-    <div id="gallery" className="min-h-[60vh] h-auto bg-[#f2ebd8] flex flex-col items-center p-5">
+    <div
+      id="gallery"
+      className="min-h-[60vh] h-auto bg-[#f2ebd8] flex flex-col items-center p-5"
+    >
       <h2 className="fontPoppins font-[700] text-xl text-black w-[90%] text-center">
         Have memories with <br></br>Hidden Leaf Cafe?
       </h2>
@@ -107,9 +110,11 @@ export default function Gallery() {
         Upload your memory
       </button>
       <div className="mt-10 flex flex-row flex-wrap gap-5 pl-5 pr-5">
-        {images.length <= 0 &&
-        <h2 className="text-orange-900 fontOutfit font-[600] text-sm">...No memories yet, try adding yours...</h2>
-        }
+        {images.length <= 0 && (
+          <h2 className="text-orange-900 fontOutfit font-[600] text-sm">
+            ...No memories yet, try adding yours...
+          </h2>
+        )}
         {images?.map((img: CloudinaryResource) => {
           const imageUrl = `https://res.cloudinary.com/dzczno8ka/image/upload/v${img.version}/${img.public_id}.${img.format}`;
           return (
