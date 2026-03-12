@@ -2,8 +2,20 @@
 import { useEffect, useState, useRef, FormEvent } from "react";
 import Image from "next/image";
 
+interface CloudinaryResource {
+  public_id: string;
+  format: string;
+  version: number;
+  type: string;
+  created_at: string;
+  bytes: number;
+  width: number;
+  height: number;
+  secure_url: string;
+}
+
 export default function Gallery() {
-  const [images, setImages] = useState<any>([]);
+  const [images, setImages] = useState<CloudinaryResource[]>([]);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -18,7 +30,6 @@ export default function Gallery() {
           return;
         }
         const data = await response.json();
-        console.log(data.resources);
         setImages(data.resources);
       } catch (error) {
         console.error("Error fetching gallery:", error);
@@ -99,8 +110,7 @@ export default function Gallery() {
         {images.length <= 0 &&
         <h2 className="text-orange-900 fontOutfit font-[600] text-sm">...No memories yet, try adding yours...</h2>
         }
-        {images?.map((img: any) => {
-            console.log(images.length)
+        {images?.map((img: CloudinaryResource) => {
           const imageUrl = `https://res.cloudinary.com/dzczno8ka/image/upload/v${img.version}/${img.public_id}.${img.format}`;
           return (
             <Image

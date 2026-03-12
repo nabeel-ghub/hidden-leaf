@@ -7,6 +7,7 @@ interface MobMenuProps {
 }
 
 export default function MobMenu({mobMenuRef}: MobMenuProps) {
+
     useEffect(() => {
         const ctx = gsap.context(() => {
             gsap.from(mobMenuRef.current, {
@@ -20,7 +21,7 @@ export default function MobMenu({mobMenuRef}: MobMenuProps) {
             })
         })
         return() => ctx.revert();
-    }, [])
+    }, [mobMenuRef])
 
     function handleScroll(e: React.MouseEvent<HTMLSpanElement>, targetId: string) {
     // Check if the link is an internal hash link
