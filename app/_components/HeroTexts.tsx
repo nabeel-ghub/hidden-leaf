@@ -1,5 +1,5 @@
 "use client";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { SplitText } from "gsap/SplitText";
