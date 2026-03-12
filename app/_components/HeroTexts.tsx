@@ -64,7 +64,7 @@ export default function HeroTexts() {
   }
 
   return (
-    <div id="home" className="bg-black h-[calc(100vh-60px)]">
+    <div id="home" className="bg-black h-[100vh]">
       <section className="relative p-10 justify-center md:pl-30 h-[100%] flex isolate flex-col mask-radial-from-60% mask-radial-to-100%">
         <Image
           src={heroImage}
